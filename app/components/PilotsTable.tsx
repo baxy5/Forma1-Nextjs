@@ -28,8 +28,10 @@ const PilotsTable = ({ data }: { data: Pilot[] }) => {
   };
 
   function nextPage() {
-    setFromPage((prev) => prev + 10);
-    setToPage((prev) => prev + 10);
+    if (data.length > toPage) {
+      setFromPage((prev) => prev + 10);
+      setToPage((prev) => prev + 10);
+    }
   }
 
   function prevPage() {

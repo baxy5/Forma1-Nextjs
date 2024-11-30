@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
-import Result from "../interfaces/Result";
+import Gp from "../interfaces/Gp";
 
-const ResultsTable = ({ data }: { data: Result[] }) => {
-  const [filteredData, setFilteredData] = useState<Result[]>([]);
+export const GpTable = ({ data }: { data: Gp[] }) => {
+  const [filteredData, setFilteredData] = useState<Gp[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [fromPage, setFromPage] = useState<number>(0);
   const [toPage, setToPage] = useState<number>(10);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   function onSearch(input: string) {
     setSearchQuery(input);
     const filtered = data.filter(
       (d) =>
-        d.csapat?.toLowerCase().includes(input.toLowerCase()) ||
-        d.motor.toLowerCase().includes(input.toLowerCase()) ||
-        d.tipus.toLowerCase().includes(input.toLowerCase())
+        d.nev.toLowerCase().includes(input.toLowerCase()) ||
+        d.helyszin.toLowerCase().includes(input.toLowerCase())
     );
 
     setFilteredData(filtered);
-  }
-
-  function sortByDate(direction: "asc" | "desc") {
-    setSortDirection(direction);
-    const sorted = [...(filteredData.length > 0 ? filteredData : data)].sort(
-      (a, b) => {
-        const dateA = new Date(a.datum).getTime();
-        const dateB = new Date(b.datum).getTime();
-        return direction === "asc" ? dateA - dateB : dateB - dateA;
-      }
-    );
-    setFilteredData(sorted);
   }
 
   function nextPage() {
@@ -58,7 +44,7 @@ const ResultsTable = ({ data }: { data: Result[] }) => {
   return (
     <div className="py-24">
       <section className="p-6 max-w-2xl mx-auto rounded-lg border border-gray-200">
-        <h1 className="text-3xl font-semibold text-center pb-2">Eredmények</h1>
+        <h1 className="text-3xl font-semibold text-center pb-2">Grand Prix</h1>
 
         <div className="mb-6 w-full">
           <input
@@ -74,75 +60,29 @@ const ResultsTable = ({ data }: { data: Result[] }) => {
           <thead>
             <tr className="border-b border-gray-100">
               <th className="py-4 text-left text-sm font-medium text-gray-600 flex items-center gap-2">
-                <span>Dátum</span>
-                <button
-                  onClick={() =>
-                    sortByDate(sortDirection === "asc" ? "desc" : "asc")
-                  }
-                  className="hover:bg-gray-100 p-1 rounded"
-                >
-                  {sortDirection === "asc" ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </button>
+                Dátum
               </th>
               <th className="py-4 text-left text-sm font-medium text-gray-600">
-                Csapat
+                Név
               </th>
               <th className="py-4 text-left text-sm font-medium text-gray-600">
-                Helyezés
-              </th>
-              <th className="py-4 text-left text-sm font-medium text-gray-600">
-                Típus
-              </th>
-              <th className="py-4 text-left text-sm font-medium text-gray-600">
-                Motor
+                Helyszin
               </th>
             </tr>
           </thead>
           <tbody>
             {(filteredData.length > 0 ? filteredData : data)
               .slice(fromPage, toPage)
-              .map((result, index) => (
+              .map((gp, index) => (
                 <tr
                   key={index}
                   className="border-b border-gray-50 hover:bg-gray-50 transition-colors"
                 >
                   <td className="py-3 text-sm text-gray-800">
-                    {new Date(result.datum).toLocaleDateString()}
+                    {new Date(gp.date).toLocaleDateString()}
                   </td>
-                  <td className="py-3 text-sm text-gray-800">
-                    {result.csapat}
-                  </td>
-                  <td className="py-3 text-sm text-gray-800">
-                    {result.helyezes}
-                  </td>
-                  <td className="py-3 text-sm text-gray-800">{result.tipus}</td>
-                  <td className="py-3 text-sm text-gray-800">{result.motor}</td>
+                  <td className="py-3 text-sm text-gray-800">{gp.nev}</td>
+                  <td className="py-3 text-sm text-gray-800">{gp.helyszin}</td>
                 </tr>
               ))}
           </tbody>
@@ -176,5 +116,3 @@ const ResultsTable = ({ data }: { data: Result[] }) => {
     </div>
   );
 };
-
-export default ResultsTable;
