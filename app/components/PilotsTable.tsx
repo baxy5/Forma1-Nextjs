@@ -7,7 +7,7 @@ const PilotsTable = ({ data }: { data: Pilot[] }) => {
   const [natQuery, setNatQuery] = useState<string>("");
   const [fromPage, setFromPage] = useState<number>(0);
   const [toPage, setToPage] = useState<number>(10);
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [isDisabled, setDisabled] = useState<boolean>(true);
 
   const onNameSearch = (query: string) => {
     setQuery(query);
@@ -124,7 +124,7 @@ const PilotsTable = ({ data }: { data: Pilot[] }) => {
             <div className="flex items-center space-x-2">
               <button
                 className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50 disabled:opacity-50"
-                disabled={disabled}
+                disabled={isDisabled}
                 onClick={() => prevPage()}
               >
                 Előző
