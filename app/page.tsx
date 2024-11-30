@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 pt-24">
       <div className="max-w-4xl mx-auto text-center px-4">
         <h1 className="text-6xl font-bold text-gray-900 mb-6">BlueBull</h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
