@@ -37,14 +37,14 @@ const Header = () => {
             </Link>
             {user?.role === "ROLE_ADMIN" && (
               <Link
-                href="/uzenetek"
+                href="/messages"
                 className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
               >
                 Üzenetek
               </Link>
             )}
             <Link
-              href="/uzenetkuldes"
+              href="/send-messages"
               className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
             >
               Üzenetküldés
