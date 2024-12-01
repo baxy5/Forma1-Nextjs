@@ -2,7 +2,7 @@ export default async function fetchData(url: string) {
   try {
     const response = await fetch(url, {
       headers: {
-        Authorization: "Basic " + btoa("admin:admin"),
+        Authorization: "Bearer " + btoa("admin:admin"),
       },
     });
 

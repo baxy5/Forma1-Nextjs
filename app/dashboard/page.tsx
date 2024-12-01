@@ -8,7 +8,7 @@ import Result from "../interfaces/Result";
 import Gp from "../interfaces/Gp";
 import { GpTable } from "../components/GpTable";
 
-const Home = () => {
+const Dashboard = () => {
   const [pilots, setPilots] = useState<Pilot[]>([]);
   const [results, setResults] = useState<Result[]>([]);
   const [gp, setGp] = useState<Gp[]>([]);
@@ -16,10 +16,10 @@ const Home = () => {
   const fetchAllData = async () => {
     const pilots = await fetchData("http://localhost:8080/api/pilots/pilots");
     setPilots(pilots);
-    const results = await fetchData(
+    /* const results = await fetchData(
       "http://localhost:8080/api/results/results"
     );
-    setResults(results);
+    setResults(results); */
     const gps = await fetchData("http://localhost:8080/api/gp/allgp");
     setGp(gps);
   };
@@ -31,10 +31,10 @@ const Home = () => {
   return (
     <div>
       <PilotsTable data={pilots} />
-      <ResultsTable data={results} />
+      {/* <ResultsTable data={results} /> */}
       <GpTable data={gp} />
     </div>
   );
 };
 
-export default Home;
+export default Dashboard;
