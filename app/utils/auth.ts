@@ -13,6 +13,13 @@ export const setToken = (token: string) => {
   }
 };
 
+export const getJwtToken = (): string | null => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+};
+
 export const getToken = (): DecodedToken | null => {
   if (typeof window !== "undefined") {
     const token = localStorage.getItem("token");

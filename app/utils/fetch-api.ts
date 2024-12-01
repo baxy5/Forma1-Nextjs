@@ -1,8 +1,8 @@
-export default async function fetchData(url: string) {
+export default async function fetchData(url: string, token?: string | null) {
   try {
     const response = await fetch(url, {
       headers: {
-        Authorization: "Bearer " + btoa("admin:admin"),
+        Authorization: `Bearer ${token}`,
       },
     });
 

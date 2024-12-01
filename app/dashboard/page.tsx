@@ -8,6 +8,7 @@ import Result from "../interfaces/Result";
 import Gp from "../interfaces/Gp";
 import { GpTable } from "../components/GpTable";
 import { AuthContext } from "../context/AuthContext";
+import { getJwtToken } from "../utils/auth";
 
 const Dashboard = () => {
   const [pilots, setPilots] = useState<Pilot[]>([]);
@@ -18,6 +19,8 @@ const Dashboard = () => {
 
   const fetchAllData = async () => {
     try {
+      const token = getJwtToken();
+
       const pilotsData = await fetchData(
         "http://localhost:8080/api/pilots/pilots"
       );
@@ -26,9 +29,10 @@ const Dashboard = () => {
       const gpData = await fetchData("http://localhost:8080/api/gp/allgp");
       setGp(gpData);
 
-      if (user && (user.role === "ADMIN" || user.role === "USER")) {
+      if (user && (user.role === "ROLE_ADMIN" || user.role === "ROLE_USER")) {
         const resultsData = await fetchData(
-          "http://localhost:8080/api/results/results"
+          "http://localhost:8080/api/results/results",
+          token
         );
         setResults(resultsData);
       }
@@ -50,8 +54,10 @@ const Dashboard = () => {
   return (
     <div>
       <PilotsTable data={pilots} />
-      {/* <ResultsTable data={results} /> */}
       <GpTable data={gp} />
+      {user?.role === "ROLE_ADMIN" || user?.role === "ROLE_USER" ? (
+        <ResultsTable data={results} />
+      ) : null}
     </div>
   );
 };
