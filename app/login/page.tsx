@@ -1,13 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { setToken } from "../utils/auth";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [pass, setPass] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
+  const { login } = useContext(AuthContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fetchLogin = async (e: any) => {
@@ -32,7 +34,10 @@ const Login = () => {
       const data = await response.json();
       const token = data.token;
       setToken(token);
-      router.push("/");
+      login(token);
+      setTimeout(() => {
+        router.push("/");
+      }, 100);
     } catch (err) {
       setError((err as Error).message);
     }
